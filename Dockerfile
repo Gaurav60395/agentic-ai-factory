@@ -7,8 +7,8 @@ WORKDIR /app
 # Copy the requirements file into the container
 COPY requirements.txt .
 
-# Install any dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install any dependencies if requirements.txt exists
+RUN if [ -f requirements.txt ]; then pip install --no-cache-dir -r requirements.txt; else echo 'No requirements.txt found, skipping dependency installation.'; fi
 
 # Copy the rest of the application code into the container
 COPY . .

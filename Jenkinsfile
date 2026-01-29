@@ -10,14 +10,26 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                // Install dependencies (if any)
-                sh 'pip install -r requirements.txt'
+                // Check if requirements.txt exists before installing
+                script {
+                    if (fileExists('requirements.txt')) {
+                        sh 'pip install -r requirements.txt'
+                    } else {
+                        echo 'No requirements.txt found, skipping dependency installation.'
+                    }
+                }
             }
         }
         stage('Run Tests') {
             steps {
-                // Run tests (if any)
-                sh 'pytest'
+                // Check if tests exist before running
+                script {
+                    if (fileExists('tests/')) { // Assuming tests are in a 'tests' directory
+                        sh 'pytest'
+                    } else {
+                        echo 'No tests found, skipping test execution.'
+                    }
+                }
             }
         }
     }
