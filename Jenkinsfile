@@ -32,5 +32,17 @@ pipeline {
                 }
             }
         }
+        stage('Build Docker Image') {
+            steps {
+                // Build the Docker image
+                sh 'docker build -t your-image-name .'
+            }
+        }
+        stage('Run Docker Container') {
+            steps {
+                // Run the Docker container
+                sh 'docker run your-image-name'
+            }
+        }
     }
 }
